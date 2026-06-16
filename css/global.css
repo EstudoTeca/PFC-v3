@@ -1,0 +1,188 @@
+/* ============================================================
+   css/global.css - Arquitetura de Layout SaaS Elite
+   ============================================================ */
+
+/* --- 1. ESTRUTURA DE TELA --- */
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-app);
+}
+
+/* --- 2. SIDEBAR ELITE (FIXA À ESQUERDA) --- */
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background-color: var(--secondary);
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 35px 20px;
+    z-index: 1000;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-container {
+    padding: 0 15px 35px;
+    text-align: left;
+}
+
+.site-logo {
+    width: 140px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+}
+
+/* Navegação Sidebar */
+.nav-menu {
+    flex-grow: 1;
+}
+
+.nav-label {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin: 25px 0 10px 15px;
+    display: block;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 6px;
+    transition: var(--transition);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    outline: none;
+}
+
+.nav-link i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--secondary);
+    font-weight: 800;
+    box-shadow: 0 10px 20px var(--primary-glow);
+}
+
+/* --- 3. CONTAINER PRINCIPAL --- */
+.app-container {
+    margin-left: 280px; /* Alinhado com a largura da sidebar */
+    width: calc(100% - 280px);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* HEADER GLASSMORPHISM */
+.main-header {
+    height: 80px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 45px;
+    position: sticky;
+    top: 0;
+    z-index: 990;
+}
+
+.header-left { flex: 1; }
+
+.search-bar {
+    background: #f1f5f9;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1.5px solid transparent;
+    transition: var(--transition);
+}
+
+.search-bar:focus-within {
+    background: white;
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-family: inherit;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.header-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--border);
+}
+
+/* --- 4. ÁREA DE CONTEÚDO DINÂMICO --- */
+.main-content {
+    padding: 40px;
+    flex: 1;
+}
+
+.tab-content {
+    display: none; 
+    animation: tabFadeIn 0.4s ease-out forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes tabFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 5. RESPONSIVIDADE --- */
+@media (max-width: 1100px) {
+    .sidebar { width: 95px; padding: 35px 15px; }
+    .nav-label, .nav-link span, .u-info, .sidebar-bottom span, .u-greeting, .site-logo {
+        display: none;
+    }
+    .app-container { margin-left: 95px; width: calc(100% - 95px); }
+    .nav-link { justify-content: center; padding: 18px; }
+    .main-header { padding: 0 25px; }
+}

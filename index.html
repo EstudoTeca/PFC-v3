@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstudoTeca | Elite SaaS Dashboard</title>
+    
+    <!-- Tipografia e Ícones Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Modularizado (v10.4) -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- Overlay de Carregamento -->
+    <div id="app-loader" class="loader-overlay">
+        <div class="spinner-premium"></div>
+    </div>
+
+    <!-- Container Global de Notificações (Pop-ups) -->
+    <div id="toast-container"></div>
+
+    <!-- SIDEBAR ELITE -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo-container">
+                <img src="assets/logo-branca.png" alt="EstudoTeca" class="site-logo">
+            </div>
+            
+            <nav class="nav-menu">
+                <small class="nav-label">PLATAFORMA ELITE</small>
+                <button class="nav-link" data-tab="inicio">
+                    <i class="fa-solid fa-house-chimney"></i> <span>Dashboard</span>
+                </button>
+                <button class="nav-link" data-tab="disciplinas">
+                    <i class="fa-solid fa-book-bookmark"></i> <span>Disciplinas</span>
+                </button>
+                <button class="nav-link" data-tab="vestibular">
+                    <i class="fa-solid fa-graduation-cap"></i> <span>Vestibular</span>
+                </button>
+                <button class="nav-link" data-tab="atividades">
+                    <i class="fa-solid fa-list-check"></i> <span>Praticar</span>
+                </button>
+                <button class="nav-link" data-tab="agenda">
+                    <i class="fa-solid fa-calendar-days"></i> <span>Cronograma</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+            <button class="nav-link btn-ai-sidebar" onclick="App.openAiChat()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Assistente IA</span>
+            </button>
+
+            <!-- Perfil do Usuário -->
+            <div class="profile-accordion" id="sidebarProfileAccordion">
+                <div class="accordion-header" onclick="App.toggleAccordion('sidebarProfileAccordion')">
+                    <img src="" alt="Avatar" class="user-avatar" id="sidebar-avatar-img">
+                    <div class="u-info">
+                        <span class="u-name">Carregando...</span>
+                        <span class="u-plan">Elite Member</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-up"></i>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-inner">
+                        <a href="javascript:void(0)" onclick="apiService.logout()" style="color:var(--error)">Sair do Sistema</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="app-container">
+        
+        <!-- HEADER -->
+        <header class="main-header">
+            <div class="header-left">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="IA: Pesquise conteúdos ou fórmulas...">
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <!-- SINO DE NOTIFICAÇÕES -->
+                <div class="notif-wrapper">
+                    <button class="icon-btn-premium" onclick="App.toggleNotifDropdown()">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notif-dot hidden" id="notif-dot"></span>
+                    </button>
+                    
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <header class="notif-header">
+                            <h4>Avisos e Metas</h4>
+                            <button onclick="App.clearNotifs()" style="background:none; border:none; color:var(--accent); font-weight:800; cursor:pointer">Limpar</button>
+                        </header>
+                        <div id="notif-list" class="notif-list">
+                            <!-- Injetado pelo JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-divider"></div>
+
+                <div class="user-profile-header" style="display:flex; align-items:center; gap:12px">
+                    <span style="font-weight:700; color:var(--text-muted)">Olá, <strong id="header-user-name" style="color:var(--secondary)">...</strong></span>
+                    <img src="" alt="Avatar" id="header-avatar-img" style="width:38px; height:38px; border-radius:10px; border: 2px solid var(--primary)">
+                </div>
+            </div>
+        </header>
+
+        <!-- VIEWPORT DINÂMICO (SPA) -->
+        <main class="main-content">
+            
+            <!-- 1. DASHBOARD -->
+            <section id="tab-inicio" class="tab-content">
+                <div class="hero-premium">
+                    <div class="hero-info">
+                        <h1>Sua aprovação em <span class="text-gradient">2026.</span></h1>
+                        <p>O sucesso é a soma de pequenos esforços repetidos dia após dia. Use as ferramentas de revisão e prática para evoluir.</p>
+                        <div class="hero-actions">
+                            <button class="btn btn-primary" onclick="App.showTab('disciplinas')">Ver Trilhas</button>
+                            <button class="btn btn-glass" onclick="App.showTab('atividades')">Ir para Prática</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. DISCIPLINAS -->
+            <section id="tab-disciplinas" class="tab-content">
+                <h2 style="margin-bottom:25px">Minhas Trilhas de Conhecimento</h2>
+                <div class="grid-layout" id="disciplinas-grid"></div>
+            </section>
+
+            <!-- 3. VESTIBULAR (PDFS) -->
+            <section id="tab-vestibular" class="tab-content">
+                <h2>Centro de Provas ENEM</h2>
+                <div class="pdf-grid" id="pdf-list-container"></div>
+            </section>
+
+            <!-- 4. PRÁTICA (QUIZ) -->
+            <section id="tab-atividades" class="tab-content">
+                <div id="quiz-container" class="card" style="padding:40px">
+                    <div style="text-align:center; color:gray">
+                        <i class="fa-solid fa-layer-group fa-3x" style="margin-bottom:20px"></i>
+                        <p>Selecione uma matéria em "Disciplinas" para iniciar uma sessão de prática.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. CRONOGRAMA -->
+            <section id="tab-agenda" class="tab-content">
+                <div class="calendar-header-elite">
+                    <h2>Cronograma Inteligente</h2>
+                    <div class="calendar-controls">
+                        <button onclick="App.changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="calendar-month-year">...</h3>
+                        <button onclick="App.changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div id="calendar-grid" class="calendar-grid-elite"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL DE REVISÃO (VIDEO + CONTEÚDO) -->
+    <div class="modal-overlay" id="revisionModal">
+        <div class="modal-card" style="max-width: 900px;">
+            <header class="notif-header" style="background:var(--secondary); color:white; border:none">
+                <h3 id="rev-title">Título da Aula</h3>
+                <button onclick="App.closeRevision()" style="color:white; font-size:1.8rem; background:none; border:none; cursor:pointer">&times;</button>
+            </header>
+            
+            <div class="revision-container">
+                <div class="video-wrapper">
+                    <iframe id="rev-video" src="" allowfullscreen></iframe>
+                </div>
+                <div class="content-text-area">
+                    <h2>Explicação Técnica</h2>
+                    <p id="rev-desc"></p>
+                    
+                    <img id="rev-img" class="content-image" src="" alt="Ilustração">
+                    
+                    <div class="card" style="padding:20px; background:#f8fafc; border-left:5px solid var(--primary)">
+                        <strong>Exemplo Prático:</strong>
+                        <p id="rev-example" style="margin-top:10px"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CHAT IA -->
+    <div class="modal-overlay" id="aiChatModal">
+        <div class="modal-card" style="max-width: 500px;">
+            <header class="notif-header" style="background:var(--secondary); color:white; border:none">
+                <h3 style="margin:0"><i class="fa-solid fa-robot"></i> Assistente IA</h3>
+                <button onclick="App.closeAiChat()" style="color:white; font-size:1.5rem; background:none; border:none; cursor:pointer">&times;</button>
+            </header>
+            <div class="ai-chat-body" id="ai-chat-content"></div>
+            <div style="padding:20px; display:flex; gap:10px; background:white">
+                <input type="text" id="ai-user-input" style="flex:1; padding:12px; border-radius:10px; border:1px solid #ddd; outline:none" placeholder="Tire sua dúvida...">
+                <button class="btn btn-primary" onclick="App.handleAiChatSubmit()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts da Aplicação -->
+    <script src="js/services.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
