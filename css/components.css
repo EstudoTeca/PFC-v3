@@ -1,8 +1,8 @@
 /* ============================================================
-   css/components.css - Design System de Componentes v10.4
+   css/components.css - Biblioteca de Componentes v11.0
    ============================================================ */
 
-/* --- 1. SISTEMA DE BOTÕES ELITE --- */
+/* --- 1. SISTEMA DE BOTÕES --- */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -16,6 +16,7 @@
     transition: var(--transition);
     border: none;
     font-size: 0.9rem;
+    outline: none;
 }
 
 .btn-primary { 
@@ -25,21 +26,17 @@
 }
 .btn-primary:hover { 
     background-color: var(--primary-dark); 
-    color: white; transform: translateY(-2px);
+    color: white;
+    transform: translateY(-2px);
 }
 
 .btn-secondary { 
     background-color: #f1f5f9; 
-    color: var(--secondary); border: 1px solid var(--border);
+    color: var(--secondary); 
+    border: 1px solid var(--border);
 }
 
-.btn-glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: white; border: 1px solid rgba(255,255,255,0.2);
-}
-
-/* --- 2. NOTIFICAÇÕES (DROPDOWN FLUTUANTE CORRIGIDO) --- */
+/* --- 2. NOTIFICAÇÕES (DROPDOWN FLUTUANTE) --- */
 .notif-wrapper { position: relative; }
 
 .icon-btn-premium {
@@ -54,11 +51,11 @@
 }
 
 .notif-dropdown {
-    position: absolute; top: 60px; right: 0; width: 340px;
+    position: absolute; top: 60px; right: 0; width: 320px;
     background: white; border-radius: var(--radius-lg);
     box-shadow: var(--shadow-premium); border: 1px solid var(--border);
     display: none; flex-direction: column; overflow: hidden;
-    z-index: 2000; /* Garante que fique por cima de tudo */
+    z-index: 2000;
 }
 .notif-dropdown.active { display: flex; animation: tabFadeIn 0.3s ease; }
 
@@ -67,53 +64,34 @@
     border-bottom: 1px solid var(--border);
     display: flex; justify-content: space-between; align-items: center;
 }
-.notif-header h4 { font-size: 0.95rem; font-weight: 800; color: var(--secondary); }
+.notif-header h4 { font-size: 0.9rem; font-weight: 800; color: var(--secondary); }
 
-.notif-list { max-height: 400px; overflow-y: auto; }
+.notif-list { max-height: 350px; overflow-y: auto; }
 .notif-item {
     padding: 15px 20px; border-bottom: 1px solid var(--border);
-    display: flex; gap: 15px; transition: 0.2s;
+    display: flex; gap: 12px; transition: 0.2s;
 }
 .notif-item:hover { background: #f8fbff; }
 .notif-item i { color: var(--primary); font-size: 1.1rem; }
 .notif-item p { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0; }
-.notif-item small { color: var(--text-muted); font-size: 0.75rem; }
+.notif-item small { color: var(--text-muted); font-size: 0.7rem; }
 
-/* --- 3. PAINEL DE REVISÃO (VIDEO + CONTEÚDO) --- */
-.revision-container {
-    display: flex; flex-direction: column; gap: 25px;
-}
-.video-wrapper {
-    position: relative; padding-bottom: 56.25%; /* Aspect Ratio 16:9 */
-    height: 0; overflow: hidden; border-radius: 20px;
-    box-shadow: var(--shadow-md); background: #000;
-}
-.video-wrapper iframe {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
-}
-.content-text-area {
-    padding: 30px; line-height: 1.8; color: var(--text-main); font-size: 1.05rem;
-}
-.content-text-area h2 { margin-bottom: 20px; color: var(--secondary); }
-.content-image {
-    width: 100%; max-height: 400px; object-fit: cover;
-    border-radius: 15px; margin: 20px 0;
+/* --- 3. BOTÕES DO SIMULADO (ABCD) --- */
+.options-grid {
+    display: flex; flex-direction: column; gap: 12px; margin-top: 20px;
 }
 
-/* --- 4. MÓDULO DE PRÁTICA (QUIZ INTERFACE) --- */
-.quiz-card { padding: 40px; text-align: left; }
-.question-text { font-size: 1.4rem; font-weight: 800; color: var(--secondary); margin-bottom: 30px; }
-
-.options-grid { display: flex; flex-direction: column; gap: 12px; }
 .opt-btn {
-    display: flex; align-items: center; gap: 20px; padding: 18px 25px;
+    display: flex; align-items: center; gap: 15px; padding: 18px 25px;
     background: #f8fafc; border: 2px solid #edf2f7; border-radius: 16px;
     cursor: pointer; transition: 0.2s; width: 100%; text-align: left;
+    font-family: inherit; font-size: 1rem; color: var(--text-main);
 }
+
 .opt-btn:hover { border-color: var(--primary); background: white; transform: translateX(5px); }
 
 .opt-btn .letter {
-    width: 35px; height: 35px; border-radius: 50%; background: white;
+    width: 32px; height: 32px; border-radius: 50%; background: white;
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; border: 2px solid #edf2f7; color: var(--secondary);
 }
@@ -121,7 +99,22 @@
 .opt-btn.correct { background: #ecfdf5; border-color: var(--success); color: #065f46; }
 .opt-btn.wrong { background: #fff1f2; border-color: var(--error); color: #9f1239; }
 
-/* --- 5. TOASTS & MODAIS --- */
+/* --- 4. PAINEL DE REVISÃO (VÍDEO E CONTEÚDO) --- */
+.video-wrapper {
+    position: relative; padding-bottom: 56.25%; height: 0; 
+    overflow: hidden; border-radius: 15px; background: #000;
+}
+.video-wrapper iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+}
+
+.content-text-area { padding: 25px 0; line-height: 1.7; }
+.content-image {
+    width: 100%; max-height: 400px; object-fit: contain;
+    border-radius: 12px; margin: 20px 0; background: #f8fafc;
+}
+
+/* --- 5. MODAIS --- */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(1, 22, 39, 0.7); backdrop-filter: blur(8px);
@@ -134,8 +127,12 @@
     box-shadow: var(--shadow-premium); position: relative; overflow-y: auto; max-height: 90vh;
 }
 
-/* --- 6. UTILS --- */
-.badge-nota {
-    background: var(--secondary); color: var(--primary);
-    padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.8rem;
+/* --- 6. TOASTS --- */
+#toast-container { position: fixed; top: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+    background: white; padding: 16px 24px; border-radius: 16px; box-shadow: var(--shadow-premium);
+    border-left: 6px solid var(--primary); display: flex; align-items: center; gap: 15px;
+    font-weight: 700; color: var(--text-main); font-size: 0.85rem;
+    animation: toastIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
 }
+@keyframes toastIn { from { transform: translateX(120%); } to { transform: translateX(0); } }

@@ -1,12 +1,12 @@
 /* ============================================================
-   js/services.js - Central de Integração SaaS Elite (v10.4)
+   js/services.js - Central de Integração EstudoTeca v11.0
    ============================================================ */
 
 const API_URL = "http://localhost:3000/api";
 
 /**
- * 1. SISTEMA DE NOTIFICAÇÕES (TOASTS)
- * Exibe alertas elegantes no estilo SaaS Premium.
+ * 1. SISTEMA GLOBAL DE NOTIFICAÇÕES (TOASTS)
+ * Exibe alertas visuais elegantes no canto da tela.
  */
 function notify(message, type = 'success') {
     const container = document.getElementById('toast-container');
@@ -15,7 +15,7 @@ function notify(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     
-    // Ícones dinâmicos
+    // Ícone baseado no tipo de mensagem
     const icon = type === 'success' ? 'fa-circle-check' : 
                  type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
 
@@ -36,54 +36,37 @@ function notify(message, type = 'success') {
 
 /**
  * 2. CORE DA API (apiService)
- * Gerencia a comunicação com o servidor e armazenamento de sessão.
+ * Objeto centralizado para comunicação com o Servidor Node.js
  */
 const apiService = {
     
-    // --- INTELIGÊNCIA ARTIFICIAL (GEMINI) ---
-    async askAI(prompt) {
-        try {
-            const response = await fetch(`${API_URL}/ai/chat`, {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({ prompt })
-            });
-
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || "IA Indisponível");
-            return data.response;
-        } catch (error) {
-            console.error("AI Error:", error);
-            throw error;
-        }
-    },
-
-    // --- AUTENTICAÇÃO ---
+    // --- AUTENTICAÇÃO E SESSÃO ---
     async login(email, password) {
-        const response = await fetch(`${API_URL}/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Falha no login");
-        
-        this.saveSession(data.token, data.user);
-        return data.user;
+        try {
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "Falha no login");
+            
+            this.saveSession(data.token, data.user);
+            return data.user;
+        } catch (error) { throw error; }
     },
 
     async register(name, email, password) {
-        const response = await fetch(`${API_URL}/auth/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, password })
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Erro no cadastro");
-        return data;
+        try {
+            const response = await fetch(`${API_URL}/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "Erro no cadastro");
+            return data;
+        } catch (error) { throw error; }
     },
 
     logout() {
@@ -91,7 +74,37 @@ const apiService = {
         window.location.href = 'login.html';
     },
 
-    // --- CRONOGRAMA & EVENTOS ---
+    // --- GERENCIAMENTO DE CONTA (NOVO) ---
+    async updateAccount(userId, newName) {
+        try {
+            const response = await fetch(`${API_URL}/user/${userId}`, {
+                method: "PUT",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ name: newName })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "Erro ao atualizar");
+            
+            localStorage.setItem('user_name', data.name);
+            return data;
+        } catch (error) { throw error; }
+    },
+
+    async deleteAccount(userId) {
+        try {
+            const response = await fetch(`${API_URL}/user/${userId}`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
+            });
+            if (!response.ok) throw new Error("Não foi possível excluir a conta");
+            return true;
+        } catch (error) { throw error; }
+    },
+
+    // --- CRONOGRAMA ---
     async getEvents() {
         try {
             const response = await fetch(`${API_URL}/events`, {
@@ -99,12 +112,24 @@ const apiService = {
                 headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
             });
             return await response.json();
-        } catch (e) {
-            return [];
-        }
+        } catch (e) { return []; }
     },
 
-    // --- PERSISTÊNCIA DE SESSÃO ---
+    async saveEvent(eventData) {
+        try {
+            const response = await fetch(`${API_URL}/events`, {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(eventData)
+            });
+            return await response.json();
+        } catch (e) { return null; }
+    },
+
+    // --- UTILITÁRIOS ---
     saveSession(token, user) {
         localStorage.setItem('token', token);
         localStorage.setItem('user_id', user.id);

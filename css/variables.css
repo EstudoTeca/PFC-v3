@@ -1,19 +1,19 @@
 /* ============================================================
-   ESTUDOTECA ELITE - DESIGN SYSTEM (v10.4)
+   ESTUDOTECA V11 - DESIGN SYSTEM (PRE-BANCA)
    ============================================================ */
 
 :root {
-    /* --- PALETA SaaS PREMIUM --- */
-    --primary: #ffb703;            /* Âmbar Principal */
+    /* --- CORES PRINCIPAIS --- */
+    --primary: #ffb703;            /* Âmbar EstudoTeca */
     --primary-dark: #fb8500;       /* Laranja Destaque */
     --primary-glow: rgba(255, 183, 3, 0.3);
     
-    --secondary: #011627;          /* Azul Escuro Sidebar */
-    --secondary-light: #05263d;    /* Azul Médio */
-    --accent: #219ebc;             /* Azul IA / Prática */
+    --secondary: #011627;          /* Marinho Escuro */
+    --secondary-light: #05263d;    /* Marinho Médio */
+    --accent: #219ebc;             /* Azul de Ação */
     
     /* --- FUNDO E TEXTO --- */
-    --bg-app: #f1f5f9;             /* Fundo Ice Blue */
+    --bg-app: #f1f5f9;             /* Ice Blue Fundo */
     --bg-card: #ffffff;
     --border: #e2e8f0;
     
@@ -44,7 +44,7 @@
     --font-head: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* --- ESTILOS GLOBAIS --- */
+/* --- ESTILOS GLOBAIS REFINADOS --- */
 * {
     margin: 0;
     padding: 0;
@@ -68,7 +68,7 @@ body {
 
 .hidden { display: none !important; }
 
-/* Scrollbar Personalizada */
+/* Scrollbar Estilo Apple */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }

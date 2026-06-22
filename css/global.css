@@ -1,5 +1,5 @@
 /* ============================================================
-   css/global.css - Arquitetura de Layout SaaS Elite
+   css/global.css - Arquitetura de Layout SaaS
    ============================================================ */
 
 /* --- 1. ESTRUTURA DE TELA --- */
@@ -9,7 +9,7 @@ body {
     background-color: var(--bg-app);
 }
 
-/* --- 2. SIDEBAR ELITE (FIXA À ESQUERDA) --- */
+/* --- 2. SIDEBAR (FIXA À ESQUERDA) --- */
 .sidebar {
     width: 280px;
     height: 100vh;
@@ -20,19 +20,19 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 35px 20px;
+    padding: 40px 20px;
     z-index: 1000;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .logo-container {
-    padding: 0 15px 35px;
+    padding: 0 15px 40px;
     text-align: left;
 }
 
 .site-logo {
     width: 140px;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
 }
 
 /* Navegação Sidebar */
@@ -45,7 +45,7 @@ body {
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 1.5px;
-    margin: 25px 0 10px 15px;
+    margin: 25px 0 12px 15px;
     display: block;
     text-transform: uppercase;
 }
@@ -58,7 +58,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     transition: var(--transition);
     font-weight: 600;
     font-size: 0.95rem;
@@ -67,7 +67,6 @@ body {
     background: transparent;
     width: 100%;
     text-align: left;
-    outline: none;
 }
 
 .nav-link i {
@@ -88,9 +87,24 @@ body {
     box-shadow: 0 10px 20px var(--primary-glow);
 }
 
+/* Rodapé da Sidebar (Área de Perfil Clicável) */
+.sidebar-bottom {
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-accordion {
+    transition: 0.3s;
+    border-radius: var(--radius-md);
+}
+
+.profile-accordion:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
 /* --- 3. CONTAINER PRINCIPAL --- */
 .app-container {
-    margin-left: 280px; /* Alinhado com a largura da sidebar */
+    margin-left: 280px; 
     width: calc(100% - 280px);
     display: flex;
     flex-direction: column;
@@ -101,8 +115,8 @@ body {
 .main-header {
     height: 80px;
     background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -115,33 +129,15 @@ body {
 
 .header-left { flex: 1; }
 
-.search-bar {
+/* Área de Perfil no Header (Clicável) */
+.user-profile-header {
+    transition: 0.3s;
+    padding: 8px 12px;
+    border-radius: 12px;
+}
+
+.user-profile-header:hover {
     background: #f1f5f9;
-    padding: 12px 20px;
-    border-radius: var(--radius-md);
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 1.5px solid transparent;
-    transition: var(--transition);
-}
-
-.search-bar:focus-within {
-    background: white;
-    border-color: var(--primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.search-bar input {
-    background: none;
-    border: none;
-    outline: none;
-    width: 100%;
-    font-size: 0.9rem;
-    color: var(--text-main);
-    font-family: inherit;
 }
 
 .header-right {
@@ -156,15 +152,15 @@ body {
     background: var(--border);
 }
 
-/* --- 4. ÁREA DE CONTEÚDO DINÂMICO --- */
+/* --- 4. VIEWPORT DE CONTEÚDO (SPA) --- */
 .main-content {
-    padding: 40px;
+    padding: 45px;
     flex: 1;
 }
 
 .tab-content {
     display: none; 
-    animation: tabFadeIn 0.4s ease-out forwards;
+    animation: tabFadeIn 0.5s ease-out forwards;
 }
 
 .tab-content.active {
@@ -178,11 +174,11 @@ body {
 
 /* --- 5. RESPONSIVIDADE --- */
 @media (max-width: 1100px) {
-    .sidebar { width: 95px; padding: 35px 15px; }
-    .nav-label, .nav-link span, .u-info, .sidebar-bottom span, .u-greeting, .site-logo {
+    .sidebar { width: 90px; padding: 40px 15px; }
+    .nav-label, .nav-link span, .u-info, .sidebar-bottom span, .site-logo {
         display: none;
     }
-    .app-container { margin-left: 95px; width: calc(100% - 95px); }
+    .app-container { margin-left: 90px; width: calc(100% - 90px); }
     .nav-link { justify-content: center; padding: 18px; }
     .main-header { padding: 0 25px; }
 }

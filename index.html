@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstudoTeca | Elite SaaS Dashboard</title>
+    <title>EstudoTeca | Gestão Acadêmica v11.1</title>
     
     <!-- Tipografia e Ícones Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- CSS Modularizado (v10.4) -->
+    <!-- CSS Modularizado -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/components.css">
@@ -17,15 +17,15 @@
 </head>
 <body>
 
-    <!-- Overlay de Carregamento -->
+    <!-- Loader de Segurança -->
     <div id="app-loader" class="loader-overlay">
         <div class="spinner-premium"></div>
     </div>
 
-    <!-- Container Global de Notificações (Pop-ups) -->
+    <!-- Sistema de Alertas (Toasts) -->
     <div id="toast-container"></div>
 
-    <!-- SIDEBAR ELITE -->
+    <!-- SIDEBAR SaaS -->
     <aside class="sidebar">
         <div class="sidebar-top">
             <div class="logo-container">
@@ -33,7 +33,7 @@
             </div>
             
             <nav class="nav-menu">
-                <small class="nav-label">PLATAFORMA ELITE</small>
+                <small class="nav-label">PLATAFORMA</small>
                 <button class="nav-link" data-tab="inicio">
                     <i class="fa-solid fa-house-chimney"></i> <span>Dashboard</span>
                 </button>
@@ -53,30 +53,20 @@
         </div>
 
         <div class="sidebar-bottom">
-            <button class="nav-link btn-ai-sidebar" onclick="App.openAiChat()">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Assistente IA</span>
-            </button>
-
-            <!-- Perfil do Usuário -->
-            <div class="profile-accordion" id="sidebarProfileAccordion">
-                <div class="accordion-header" onclick="App.toggleAccordion('sidebarProfileAccordion')">
+            <!-- Perfil da Sidebar (Clicável para Configurações) -->
+            <div class="profile-accordion" id="sidebarProfileAccordion" style="cursor:pointer">
+                <div class="accordion-header">
                     <img src="" alt="Avatar" class="user-avatar" id="sidebar-avatar-img">
                     <div class="u-info">
-                        <span class="u-name">Carregando...</span>
+                        <span class="u-name" id="sidebar-user-name">Carregando...</span>
                         <span class="u-plan">Elite Member</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-up"></i>
-                </div>
-                <div class="accordion-body">
-                    <div class="accordion-inner">
-                        <a href="javascript:void(0)" onclick="apiService.logout()" style="color:var(--error)">Sair do Sistema</a>
                     </div>
                 </div>
             </div>
         </div>
     </aside>
 
-    <!-- CONTAINER PRINCIPAL -->
+    <!-- ÁREA PRINCIPAL -->
     <div class="app-container">
         
         <!-- HEADER -->
@@ -84,7 +74,7 @@
             <div class="header-left">
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="IA: Pesquise conteúdos ou fórmulas...">
+                    <input type="text" placeholder="Pesquisar matérias, PDFs ou simulados...">
                 </div>
             </div>
             
@@ -96,124 +86,167 @@
                         <span class="notif-dot hidden" id="notif-dot"></span>
                     </button>
                     
-                    <div class="notif-dropdown" id="notifDropdown">
+                    <div class="notif-dropdown card" id="notifDropdown">
                         <header class="notif-header">
-                            <h4>Avisos e Metas</h4>
-                            <button onclick="App.clearNotifs()" style="background:none; border:none; color:var(--accent); font-weight:800; cursor:pointer">Limpar</button>
+                            <h4>Notificações</h4>
+                            <button onclick="App.clearNotifs()">Limpar</button>
                         </header>
                         <div id="notif-list" class="notif-list">
-                            <!-- Injetado pelo JS -->
+                            <!-- Injetado pelo Cronograma -->
                         </div>
                     </div>
                 </div>
 
                 <div class="header-divider"></div>
 
-                <div class="user-profile-header" style="display:flex; align-items:center; gap:12px">
-                    <span style="font-weight:700; color:var(--text-muted)">Olá, <strong id="header-user-name" style="color:var(--secondary)">...</strong></span>
+                <!-- Perfil do Topo (Clicável para Configurações) -->
+                <div class="user-profile-header" id="header-profile-click" style="display:flex; align-items:center; gap:12px; cursor:pointer">
+                    <span style="font-weight:700; color:var(--text-muted)" id="header-user-name">...</span>
                     <img src="" alt="Avatar" id="header-avatar-img" style="width:38px; height:38px; border-radius:10px; border: 2px solid var(--primary)">
                 </div>
             </div>
         </header>
 
-        <!-- VIEWPORT DINÂMICO (SPA) -->
         <main class="main-content">
             
-            <!-- 1. DASHBOARD -->
+            <!-- ABA: DASHBOARD -->
             <section id="tab-inicio" class="tab-content">
                 <div class="hero-premium">
                     <div class="hero-info">
-                        <h1>Sua aprovação em <span class="text-gradient">2026.</span></h1>
-                        <p>O sucesso é a soma de pequenos esforços repetidos dia após dia. Use as ferramentas de revisão e prática para evoluir.</p>
-                        <div class="hero-actions">
-                            <button class="btn btn-primary" onclick="App.showTab('disciplinas')">Ver Trilhas</button>
-                            <button class="btn btn-glass" onclick="App.showTab('atividades')">Ir para Prática</button>
+                        <h1>Foco na <span class="text-gradient">Aprovação.</span></h1>
+                        <p>Gerencie suas 12 disciplinas e acompanhe sua média de aprendizado em tempo real.</p>
+                        <div style="display:flex; gap:15px; margin-top:20px">
+                            <button class="btn btn-primary" onclick="App.showTab('disciplinas')">Ver Disciplinas</button>
+                            <button class="btn btn-glass" onclick="App.showTab('vestibular')">Provas ENEM</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. DISCIPLINAS -->
+            <!-- ABA: DISCIPLINAS (12 MATÉRIAS + ANOS) -->
             <section id="tab-disciplinas" class="tab-content">
-                <h2 style="margin-bottom:25px">Minhas Trilhas de Conhecimento</h2>
+                <div style="margin-bottom:30px">
+                    <h2>Minhas Trilhas de Estudo</h2>
+                    <p style="color:gray; font-weight:600">Selecione o ano e comece a revisar ou praticar.</p>
+                </div>
                 <div class="grid-layout" id="disciplinas-grid"></div>
             </section>
 
-            <!-- 3. VESTIBULAR (PDFS) -->
+            <!-- ABA: VESTIBULAR -->
             <section id="tab-vestibular" class="tab-content">
-                <h2>Centro de Provas ENEM</h2>
-                <div class="pdf-grid" id="pdf-list-container"></div>
-            </section>
+                <div class="vestibular-header">
+                    <h2>Centro de Vestibular</h2>
+                    <nav class="sub-tab-nav">
+                        <button class="sub-link active" onclick="App.showSubTab('provas')">Provas PDF</button>
+                        <button class="sub-link" onclick="App.showSubTab('redacao')">Redação</button>
+                        <button class="sub-link" onclick="App.showSubTab('arquivos')">Meus Arquivos</button>
+                        <button class="sub-link" onclick="App.showSubTab('simulados')">Simulados</button>
+                    </nav>
+                </div>
 
-            <!-- 4. PRÁTICA (QUIZ) -->
-            <section id="tab-atividades" class="tab-content">
-                <div id="quiz-container" class="card" style="padding:40px">
-                    <div style="text-align:center; color:gray">
-                        <i class="fa-solid fa-layer-group fa-3x" style="margin-bottom:20px"></i>
-                        <p>Selecione uma matéria em "Disciplinas" para iniciar uma sessão de prática.</p>
+                <div id="sub-provas" class="sub-content-pane">
+                    <div class="pdf-grid" id="pdf-list-container"></div>
+                </div>
+
+                <div id="sub-redacao" class="sub-content-pane hidden">
+                    <div class="card" style="padding:30px">
+                        <input type="text" id="essay-title" placeholder="Título da Redação" style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd">
+                        <textarea id="essay-editor" placeholder="Escreva seu texto aqui..."></textarea>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px">
+                            <span id="char-count">0 caracteres</span>
+                            <button class="btn btn-primary" onclick="App.saveEssayAsPDF()">Gerar e Salvar PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sub-arquivos" class="sub-content-pane hidden">
+                    <div class="pdf-grid" id="saved-essays-container"></div>
+                </div>
+
+                <div id="sub-simulados" class="sub-content-pane hidden">
+                    <div class="card" style="padding:40px; text-align:center">
+                        <i class="fa-solid fa-feather-pointed fa-3x" style="color:var(--primary); margin-bottom:20px"></i>
+                        <h3>Simulado Geral ENEM</h3>
+                        <p>Questões ABCD de todas as áreas.</p><br>
+                        <button class="btn btn-primary" onclick="App.startQuiz('simulado_enem')">Iniciar Simulado</button>
                     </div>
                 </div>
             </section>
 
-            <!-- 5. CRONOGRAMA -->
+            <!-- ABA: PRATICAR (CHECKLIST) -->
+            <section id="tab-atividades" class="tab-content">
+                <div id="quiz-container" class="card" style="padding:40px">
+                    <div style="text-align:center; color:gray">
+                        <i class="fa-solid fa-list-check fa-3x" style="margin-bottom:20px"></i>
+                        <p>Selecione "Praticar" em uma disciplina para carregar as questões aqui.</p>
+                    </div>
+                </div>
+                <br>
+                <h3>Histórico de Desempenho</h3>
+                <div class="atividades-grid" id="atividades-list"></div>
+            </section>
+
+            <!-- ABA: CRONOGRAMA -->
             <section id="tab-agenda" class="tab-content">
                 <div class="calendar-header-elite">
                     <h2>Cronograma Inteligente</h2>
                     <div class="calendar-controls">
-                        <button onclick="App.changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button onclick="App.changeMonth(-1)">&lt;</button>
                         <h3 id="calendar-month-year">...</h3>
-                        <button onclick="App.changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button onclick="App.changeMonth(1)">&gt;</button>
                     </div>
                 </div>
                 <div id="calendar-grid" class="calendar-grid-elite"></div>
             </section>
 
+            <!-- ABA: CONFIGURAÇÕES -->
+            <section id="tab-configuracoes" class="tab-content">
+                <div class="card" style="max-width:600px; padding:40px">
+                    <h2>Perfil e Conta</h2><br>
+                    <div class="form-group">
+                        <label>Nome do Estudante</label>
+                        <input type="text" id="config-name" class="search-bar" style="max-width:none">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="text" id="config-email" class="search-bar" style="max-width:none" disabled>
+                    </div><br>
+                    <div style="display:flex; gap:10px">
+                        <button class="btn btn-primary" onclick="App.updateAccount()">Salvar</button>
+                        <button class="btn btn-secondary" onclick="apiService.logout()">Sair</button>
+                    </div>
+                    <hr style="margin:30px 0; border:none; border-top:1px solid #eee">
+                    <button class="btn" style="color:red; background:#fee2e2" onclick="App.deleteAccount()">Excluir Conta Permanentemente</button>
+                </div>
+            </section>
+
         </main>
     </div>
 
-    <!-- MODAL DE REVISÃO (VIDEO + CONTEÚDO) -->
+    <!-- MODAL DE REVISÃO -->
     <div class="modal-overlay" id="revisionModal">
-        <div class="modal-card" style="max-width: 900px;">
-            <header class="notif-header" style="background:var(--secondary); color:white; border:none">
-                <h3 id="rev-title">Título da Aula</h3>
-                <button onclick="App.closeRevision()" style="color:white; font-size:1.8rem; background:none; border:none; cursor:pointer">&times;</button>
+        <div class="modal-card">
+            <header class="notif-header" style="background:var(--secondary); color:white">
+                <h3 id="rev-title">...</h3>
+                <button onclick="App.closeRevision()" style="color:white; font-size:1.5rem; background:none; border:none">&times;</button>
             </header>
-            
-            <div class="revision-container">
+            <div class="revision-container" style="padding:30px">
                 <div class="video-wrapper">
                     <iframe id="rev-video" src="" allowfullscreen></iframe>
                 </div>
                 <div class="content-text-area">
-                    <h2>Explicação Técnica</h2>
+                    <h4>Resumo Teórico</h4>
                     <p id="rev-desc"></p>
-                    
-                    <img id="rev-img" class="content-image" src="" alt="Ilustração">
-                    
-                    <div class="card" style="padding:20px; background:#f8fafc; border-left:5px solid var(--primary)">
-                        <strong>Exemplo Prático:</strong>
-                        <p id="rev-example" style="margin-top:10px"></p>
-                    </div>
+                    <img id="rev-img" class="content-image" src="">
+                    <div id="rev-example" class="card" style="padding:15px; background:#f8fafc; border-left:5px solid var(--primary)"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CHAT IA -->
-    <div class="modal-overlay" id="aiChatModal">
-        <div class="modal-card" style="max-width: 500px;">
-            <header class="notif-header" style="background:var(--secondary); color:white; border:none">
-                <h3 style="margin:0"><i class="fa-solid fa-robot"></i> Assistente IA</h3>
-                <button onclick="App.closeAiChat()" style="color:white; font-size:1.5rem; background:none; border:none; cursor:pointer">&times;</button>
-            </header>
-            <div class="ai-chat-body" id="ai-chat-content"></div>
-            <div style="padding:20px; display:flex; gap:10px; background:white">
-                <input type="text" id="ai-user-input" style="flex:1; padding:12px; border-radius:10px; border:1px solid #ddd; outline:none" placeholder="Tire sua dúvida...">
-                <button class="btn btn-primary" onclick="App.handleAiChatSubmit()">Enviar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts da Aplicação -->
+    <!-- Dependência PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Lógica do Sistema -->
     <script src="js/services.js"></script>
     <script src="js/dashboard.js"></script>
 </body>

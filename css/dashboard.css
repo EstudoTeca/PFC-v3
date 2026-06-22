@@ -1,42 +1,40 @@
 /* ============================================================
-   css/dashboard.css - Módulos Internos SaaS Elite v10.4
+   css/dashboard.css - Módulos Internos EstudoTeca v11.1
    ============================================================ */
 
-/* --- 1. DASHBOARD: HERO SECTION --- */
+/* --- 1. HERO BANNER --- */
 .hero-premium {
     background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
     border-radius: var(--radius-lg);
     padding: 50px;
     color: white;
     margin-bottom: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     box-shadow: var(--shadow-premium);
 }
-.hero-info h1 { font-size: 2.6rem; margin-bottom: 12px; letter-spacing: -1.5px; line-height: 1.1; }
-.hero-info p { font-size: 1.1rem; opacity: 0.8; max-width: 500px; margin-bottom: 30px; }
+.hero-info h1 { font-size: 2.5rem; margin-bottom: 12px; letter-spacing: -1.5px; }
+.hero-info p { font-size: 1.1rem; opacity: 0.8; max-width: 500px; }
 
-/* --- 2. DISCIPLINAS: CARDS DE ELITE (CORREÇÃO TOTAL) --- */
+/* --- 2. GRID DE DISCIPLINAS (12 MATÉRIAS) --- */
 .grid-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
 }
 
 .subject-card-premium {
-    padding: 25px;
+    padding: 22px;
     background: white;
     border-radius: 28px;
+    border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     gap: 18px;
-    border: 1px solid var(--border);
     transition: var(--transition);
 }
-.subject-card-premium:hover { transform: translateY(-8px); box-shadow: var(--shadow-premium); border-color: var(--primary); }
+.subject-card-premium:hover { transform: translateY(-8px); box-shadow: var(--shadow-premium); }
 
-/* Seletores de Ano no Topo do Card */
+/* Seletor de Anos dentro do Card */
 .year-selector {
     display: flex;
     background: #f1f5f9;
@@ -47,73 +45,85 @@
     flex: 1; border: none; background: transparent;
     padding: 8px; font-size: 0.7rem; font-weight: 800;
     border-radius: 9px; cursor: pointer; color: var(--text-muted);
-    transition: 0.2s;
 }
 .year-btn.active { background: white; color: var(--secondary); box-shadow: var(--shadow-sm); }
 
 /* Header e Progresso */
 .subject-header { display: flex; align-items: center; gap: 15px; }
 .subject-header i { font-size: 1.4rem; color: var(--primary); background: #fff9db; padding: 12px; border-radius: 14px; }
-.subject-header h3 { font-size: 1.25rem; font-weight: 800; color: var(--secondary); }
+.subject-header h3 { font-size: 1.2rem; font-weight: 800; color: var(--secondary); }
 
 .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 800; font-size: 0.8rem; color: var(--text-muted); }
 .progress-container { background: #f1f5f9; height: 10px; border-radius: 20px; overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width 1s ease; }
 
-/* Botões de Ação do Card */
-.subject-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
-.btn-card { padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.85rem; cursor: pointer; border: 1.5px solid #eee; background: white; transition: 0.2s; }
+.subject-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-card { padding: 12px; border-radius: 12px; border: 1.5px solid #eee; background: white; font-weight: 700; cursor: pointer; transition: 0.2s; }
 .btn-card:hover { border-color: var(--primary); background: #fffdf5; }
-.btn-trilha { grid-column: span 2; background: var(--primary); color: var(--secondary); border: none; padding: 14px; border-radius: 14px; font-weight: 800; }
 
-/* --- 3. VESTIBULAR: GRADE DE PDFS --- */
+/* --- 3. VESTIBULAR: REDAÇÃO E GRADE DE PDFs --- */
+.vestibular-header { margin-bottom: 30px; }
+.sub-tab-nav { display: flex; gap: 10px; background: #e2e8f0; padding: 6px; border-radius: 14px; width: fit-content; margin-bottom: 25px; }
+.sub-link { border: none; background: transparent; padding: 10px 20px; border-radius: 10px; font-weight: 700; color: var(--text-muted); cursor: pointer; }
+.sub-link.active { background: white; color: var(--secondary); box-shadow: var(--shadow-sm); }
+
+#essay-editor {
+    width: 100%; height: 350px; border: 1.5px solid #f1f5f9; border-radius: 18px;
+    padding: 25px; font-family: inherit; font-size: 1.1rem; line-height: 1.8;
+    resize: none; outline: none; background: #fdfdfe; margin: 15px 0;
+}
+
 .pdf-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
-    margin-top: 25px;
 }
 .pdf-card {
     background: white; padding: 25px; border-radius: 20px; border: 1px solid var(--border);
     text-align: center; cursor: pointer; transition: 0.3s;
 }
-.pdf-card:hover { border-color: #ef4444; transform: translateY(-5px); box-shadow: var(--shadow-md); }
-.pdf-card i { font-size: 2.5rem; color: #ef4444; margin-bottom: 15px; display: block; }
-.pdf-card span { font-weight: 700; font-size: 0.9rem; color: var(--secondary); }
+.pdf-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.pdf-card i { font-size: 2.2rem; color: #ef4444; margin-bottom: 12px; display: block; }
+.pdf-card span { font-weight: 700; font-size: 0.85rem; color: var(--secondary); display: block; margin-bottom: 5px; }
+.pdf-card small { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; }
 
-/* --- 4. CRONOGRAMA: CALENDÁRIO INTERATIVO --- */
-.calendar-header-elite { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.calendar-controls { display: flex; align-items: center; gap: 15px; background: white; padding: 10px 20px; border-radius: 14px; box-shadow: var(--shadow-sm); }
+/* --- 4. PRATICAR (QUIZ ABCD) --- */
+.opt-btn {
+    display: flex; align-items: center; gap: 15px; padding: 18px 25px;
+    background: #f8fafc; border: 2px solid #edf2f7; border-radius: 16px;
+    cursor: pointer; transition: 0.2s; width: 100%; text-align: left;
+    font-family: inherit; font-size: 1rem; color: var(--text-main);
+}
+.opt-btn:hover { border-color: var(--primary); background: white; transform: translateX(5px); }
+.opt-btn .letter {
+    width: 32px; height: 32px; border-radius: 50%; background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; border: 2px solid #edf2f7; color: var(--secondary);
+}
+.opt-btn.correct { background: #ecfdf5; border-color: var(--success); color: #065f46; }
+.opt-btn.wrong { background: #fff1f2; border-color: var(--error); color: #9f1239; }
 
+/* --- 5. CRONOGRAMA (CALENDÁRIO) --- */
 .calendar-grid-elite {
     display: grid; grid-template-columns: repeat(7, 1fr);
     background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
 }
 .day-cell-elite {
-    min-height: 100px; padding: 12px; border: 0.5px solid #f1f5f9;
-    display: flex; flex-direction: column; align-items: flex-end; transition: 0.2s; cursor: pointer;
-    position: relative;
+    min-height: 100px; padding: 15px; border: 0.5px solid #f1f5f9;
+    display: flex; flex-direction: column; align-items: flex-end; cursor: pointer;
 }
 .day-cell-elite:hover { background: #f8fbff; }
 .day-cell-elite.today { background: #fffbeb; font-weight: 800; color: var(--primary-dark); border: 1px solid var(--primary); }
-.day-cell-empty { background: #fafafa; opacity: 0.4; }
 
-/* Indicador de Compromisso no Calendário */
-.event-indicator {
-    width: 6px; height: 6px; background: var(--primary); border-radius: 50%;
-    position: absolute; bottom: 10px; left: 10px;
-}
-
-/* --- 5. ATIVIDADES: LISTA DE CHECKLIST --- */
+/* --- 6. ATIVIDADES (HISTÓRICO) --- */
 .atividades-grid { display: flex; flex-direction: column; gap: 12px; }
 .atividade-item {
-    background: white; padding: 20px 25px; border-radius: 20px; border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between; transition: 0.3s;
+    background: white; padding: 18px 25px; border-radius: 20px;
+    border: 1px solid var(--border); display: flex; align-items: center;
+    justify-content: space-between;
 }
-.atividade-item:hover { border-color: var(--accent); transform: translateX(8px); }
 
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 1024px) {
     .grid-layout { grid-template-columns: 1fr; }
-    .pdf-grid { grid-template-columns: repeat(2, 1fr); }
+    .pdf-grid { grid-template-columns: 1fr 1fr; }
 }
